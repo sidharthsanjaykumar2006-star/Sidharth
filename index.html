@@ -4,1843 +4,642 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sidharth S | Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* ============================================
-           RESET & VARIABLES
-        ============================================ */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        :root {
-            --clr-bg: #06080d;
-            --clr-surface: #0d1117;
-            --clr-card: #161b22;
-            --clr-card-hover: #1c2333;
-            --clr-border: #21262d;
-            --clr-border-light: #30363d;
-            --clr-text: #e6edf3;
-            --clr-text-dim: #8b949e;
-            --clr-text-muted: #6e7681;
-            --clr-accent: #58a6ff;
-            --clr-accent-dim: rgba(88, 166, 255, 0.12);
-            --clr-green: #3fb950;
-            --clr-green-dim: rgba(63, 185, 80, 0.12);
-            --clr-purple: #bc8cff;
-            --clr-purple-dim: rgba(188, 140, 255, 0.12);
-            --clr-orange: #f0883e;
-            --clr-orange-dim: rgba(240, 136, 62, 0.12);
-            --clr-cyan: #39d2c0;
-            --clr-cyan-dim: rgba(57, 210, 192, 0.12);
-            --clr-rose: #f778ba;
-            --clr-rose-dim: rgba(247, 120, 186, 0.12);
-            --gradient-main: linear-gradient(135deg, #58a6ff 0%, #bc8cff 50%, #f778ba 100%);
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
-            --shadow: 0 8px 32px rgba(0,0,0,0.3);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-main: 'Space Grotesk', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
         }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 80px;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-
-        body {
-            font-family: var(--font-main);
-            background: var(--clr-bg);
-            color: var(--clr-text);
-            line-height: 1.7;
-            overflow-x: hidden;
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
         }
-
-        ::selection {
-            background: rgba(88, 166, 255, 0.3);
-            color: #fff;
+        @keyframes blink {
+            50% { border-color: transparent; }
         }
-
-        a {
-            color: var(--clr-accent);
-            text-decoration: none;
-            transition: var(--transition);
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        a:hover {
-            color: var(--clr-purple);
+        @keyframes border-pulse {
+            0%, 100% { border-color: rgba(99, 102, 241, 0.3); }
+            50% { border-color: rgba(99, 102, 241, 0.8); }
         }
-
-        /* ============================================
-           CURSOR GLOW EFFECT
-        ============================================ */
-        .glow-cursor {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            background: radial-gradient(circle, rgba(88, 166, 255, 0.06) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            transition: left 0.5s ease, top 0.5s ease;
-        }
-
-        /* ============================================
-           NAVIGATION
-        ============================================ */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 999;
-            padding: 0 24px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            background: rgba(6, 8, 13, 0.8);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid transparent;
-            transition: var(--transition);
-        }
-
-        .navbar.scrolled {
-            border-bottom-color: var(--clr-border);
-            background: rgba(6, 8, 13, 0.95);
-        }
-
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.15rem;
-            color: var(--clr-text);
-        }
-
-        .nav-brand-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: var(--gradient-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: #fff;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 4px;
-        }
-
-        .nav-menu a {
-            padding: 8px 16px;
-            border-radius: var(--radius-sm);
-            color: var(--clr-text-dim);
-            font-size: 0.88rem;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-        .nav-menu a:hover,
-        .nav-menu a.active {
-            color: var(--clr-text);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .nav-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 8px;
-            border: none;
-            background: none;
-        }
-
-        .nav-toggle span {
-            display: block;
-            width: 22px;
-            height: 2px;
-            background: var(--clr-text);
-            border-radius: 2px;
-            transition: var(--transition);
-        }
-
-        /* ============================================
-           HERO SECTION
-        ============================================ */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 120px 24px 80px;
-            position: relative;
-        }
-
-        .hero-bg-grid {
-            position: absolute;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(88, 166, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(88, 166, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
-        }
-
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .hero-text {
-            animation: slideInLeft 1s ease both;
-        }
-
-        @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .hero-greeting {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--clr-green);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .hero-greeting .line {
-            width: 30px;
-            height: 2px;
-            background: var(--clr-green);
-        }
-
-        .hero h1 {
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 700;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 8px;
-        }
-
-        .hero h1 .highlight {
-            background: var(--gradient-main);
+        html { scroll-behavior: smooth; }
+        body { background-color: #0a0a0f; }
+        .animate-fade-in { animation: fadeInUp 0.8s ease-out forwards; }
+        .animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-delay-2 { animation-delay: 0.3s; opacity: 0; }
+        .animate-delay-3 { animation-delay: 0.5s; opacity: 0; }
+        .animate-delay-4 { animation-delay: 0.7s; opacity: 0; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient-shift 4s ease infinite;
         }
-
-        .hero h2 {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
-            font-weight: 400;
-            color: var(--clr-text-dim);
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-        }
-
-        .hero-desc {
-            font-size: 1rem;
-            color: var(--clr-text-dim);
-            max-width: 520px;
-            margin-bottom: 36px;
-            line-height: 1.8;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 48px;
-        }
-
-        .btn {
-            padding: 14px 28px;
-            border-radius: var(--radius-sm);
-            font-family: var(--font-main);
-            font-size: 0.92rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--gradient-main);
-            color: #fff;
-            box-shadow: 0 4px 24px rgba(88, 166, 255, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(88, 166, 255, 0.4);
-            color: #fff;
-        }
-
-        .btn-ghost {
-            background: transparent;
-            color: var(--clr-text);
-            border: 1px solid var(--clr-border-light);
-        }
-
-        .btn-ghost:hover {
-            border-color: var(--clr-accent);
-            background: var(--clr-accent-dim);
-            color: var(--clr-accent);
-            transform: translateY(-2px);
-        }
-
-        .hero-status {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            flex-wrap: wrap;
-        }
-
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--clr-text-dim);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        .status-dot.green {
-            background: var(--clr-green);
-            box-shadow: 0 0 8px rgba(63, 185, 80, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-
-        /* Hero Visual Side */
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: slideInRight 1s ease 0.3s both;
-        }
-
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .hero-card {
-            width: 100%;
-            max-width: 420px;
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-xl);
-            padding: 36px;
+        .gradient-border {
             position: relative;
-            overflow: hidden;
+            background: #0f0f1a;
+            border-radius: 0.75rem;
         }
-
-        .hero-card::before {
+        .gradient-border::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-main);
+            inset: -2px;
+            border-radius: 0.85rem;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #3b82f6, #6366f1);
+            background-size: 300% 300%;
+            animation: gradient-shift 5s ease infinite;
+            z-index: -1;
+            opacity: 0.7;
         }
-
-        .card-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: var(--gradient-main);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(88, 166, 255, 0.2);
+        .card-hover {
+            transition: all 0.3s ease;
         }
-
-        .card-name {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 4px;
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.25);
         }
-
-        .card-role {
-            color: var(--clr-accent);
-            font-size: 0.88rem;
-            font-weight: 500;
-            margin-bottom: 20px;
+        .skill-badge {
+            transition: all 0.3s ease;
+            cursor: default;
         }
-
-        .card-divider {
-            height: 1px;
-            background: var(--clr-border);
-            margin: 20px 0;
+        .skill-badge:hover {
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
         }
-
-        .card-details {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .card-detail-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .card-detail-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            flex-shrink: 0;
-        }
-
-        .card-detail-icon.blue { background: var(--clr-accent-dim); }
-        .card-detail-icon.green { background: var(--clr-green-dim); }
-        .card-detail-icon.purple { background: var(--clr-purple-dim); }
-
-        .card-detail-text {
-            font-size: 0.82rem;
-            color: var(--clr-text-dim);
-        }
-
-        .card-detail-text strong {
-            display: block;
-            color: var(--clr-text);
-            font-size: 0.85rem;
-        }
-
-        .card-tech-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 20px;
-        }
-
-        .tech-tag {
-            padding: 4px 12px;
-            background: var(--clr-accent-dim);
-            color: var(--clr-accent);
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 600;
-            font-family: var(--font-mono);
-        }
-
-        /* ============================================
-           SECTION STYLES
-        ============================================ */
-        .section {
-            padding: 100px 24px;
-            position: relative;
-        }
-
-        .section-alt {
-            background: var(--clr-surface);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-head {
-            margin-bottom: 56px;
-        }
-
-        .section-head .label {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--clr-accent);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .section-head h2 {
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
-            font-weight: 700;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-        }
-
-        .section-head p {
-            color: var(--clr-text-dim);
-            max-width: 500px;
-            font-size: 0.95rem;
-        }
-
-        /* ============================================
-           ABOUT SECTION
-        ============================================ */
-        .about-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .about-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 16px;
-        }
-
-        .about-content p {
-            color: var(--clr-text-dim);
-            margin-bottom: 14px;
-            font-size: 0.92rem;
-        }
-
-        .about-content strong {
-            color: var(--clr-text);
-        }
-
-        .about-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 28px;
-        }
-
-        .info-card {
-            padding: 16px;
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-        }
-
-        .info-card:hover {
-            border-color: var(--clr-accent);
-            transform: translateY(-2px);
-        }
-
-        .info-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .info-card-text {
-            font-size: 0.82rem;
-            line-height: 1.4;
-        }
-
-        .info-card-text span {
-            display: block;
-            color: var(--clr-text-muted);
-            font-size: 0.72rem;
-        }
-
-        /* Terminal About */
-        .about-terminal {
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-        }
-
-        .terminal-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 18px;
-            background: rgba(255,255,255,0.03);
-            border-bottom: 1px solid var(--clr-border);
-        }
-
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .terminal-dot.red { background: #ff5f57; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #28c840; }
-
-        .terminal-title {
-            flex: 1;
-            text-align: center;
-            font-size: 0.78rem;
-            color: var(--clr-text-muted);
-            font-family: var(--font-mono);
-        }
-
-        .terminal-body {
-            padding: 24px;
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            line-height: 2;
-        }
-
-        .term-line {
-            margin-bottom: 4px;
-        }
-
-        .term-prompt {
-            color: var(--clr-green);
-        }
-
-        .term-cmd {
-            color: var(--clr-accent);
-        }
-
-        .term-string {
-            color: var(--clr-orange);
-        }
-
-        .term-comment {
-            color: var(--clr-text-muted);
-        }
-
-        .term-key {
-            color: var(--clr-purple);
-        }
-
-        .term-value {
-            color: var(--clr-cyan);
-        }
-
-        /* ============================================
-           SKILLS SECTION
-        ============================================ */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-
-        .skill-card {
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-md);
-            padding: 28px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .skill-card::after {
+        .timeline-line { position: relative; }
+        .timeline-line::before {
             content: '';
             position: absolute;
+            left: 50%;
             top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gradient-main);
-            opacity: 0;
-            transition: var(--transition);
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, #6366f1, #8b5cf6, #6366f1, transparent);
+            transform: translateX(-50%);
         }
-
-        .skill-card:hover {
-            border-color: var(--clr-border-light);
-            background: var(--clr-card-hover);
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
+        .timeline-dot {
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
         }
-
-        .skill-card:hover::after {
-            opacity: 1;
+        .glass-effect {
+            background: rgba(15, 15, 26, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.15);
         }
-
-        .skill-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 14px;
+        .nav-blur {
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
         }
-
-        .skill-icon {
-            width: 46px;
-            height: 46px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-
-        .skill-icon.blue { background: var(--clr-accent-dim); }
-        .skill-icon.green { background: var(--clr-green-dim); }
-        .skill-icon.purple { background: var(--clr-purple-dim); }
-        .skill-icon.orange { background: var(--clr-orange-dim); }
-        .skill-icon.cyan { background: var(--clr-cyan-dim); }
-        .skill-icon.rose { background: var(--clr-rose-dim); }
-
-        .skill-card h4 {
-            font-size: 1.02rem;
-            font-weight: 600;
-        }
-
-        .skill-card p {
-            color: var(--clr-text-dim);
-            font-size: 0.84rem;
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        .skill-bar-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .skill-bar-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .skill-bar-label {
-            font-size: 0.72rem;
-            font-family: var(--font-mono);
-            color: var(--clr-text-dim);
-            min-width: 60px;
-        }
-
-        .skill-bar-track {
-            flex: 1;
-            height: 4px;
-            background: var(--clr-border);
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0f; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#6366f1, #8b5cf6);
             border-radius: 4px;
-            overflow: hidden;
         }
-
-        .skill-bar-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: var(--gradient-main);
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ============================================
-           EDUCATION & COURSES SECTION
-        ============================================ */
-        .edu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .edu-column h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .edu-column h3 .count {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            padding: 2px 10px;
-            background: var(--clr-accent-dim);
-            color: var(--clr-accent);
-            border-radius: 20px;
-        }
-
-        .edu-card {
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            margin-bottom: 16px;
-            transition: var(--transition);
+        .section-heading {
             position: relative;
+            display: inline-block;
         }
-
-        .edu-card::before {
+        .section-heading::after {
             content: '';
             position: absolute;
-            top: 24px;
-            left: -1px;
-            width: 3px;
-            height: 24px;
-            border-radius: 0 3px 3px 0;
-            background: var(--clr-accent);
-        }
-
-        .edu-card:hover {
-            border-color: var(--clr-border-light);
-            transform: translateX(4px);
-        }
-
-        .edu-date {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--clr-green);
-            margin-bottom: 8px;
-        }
-
-        .edu-card h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .edu-card .org {
-            color: var(--clr-accent);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-        }
-
-        .edu-card p {
-            color: var(--clr-text-dim);
-            font-size: 0.82rem;
-            line-height: 1.7;
-        }
-
-        /* ============================================
-           EXPERIENCE SECTION
-        ============================================ */
-        .exp-showcase {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .exp-card {
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .exp-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
+            bottom: -8px;
             left: 0;
-            right: 0;
+            width: 60%;
             height: 3px;
-            background: var(--gradient-main);
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, transparent);
+            border-radius: 2px;
         }
-
-        .exp-card:hover {
-            box-shadow: var(--shadow);
-            border-color: var(--clr-border-light);
-        }
-
-        .exp-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .exp-role {
-            font-size: 1.4rem;
-            font-weight: 700;
-        }
-
-        .exp-org {
-            color: var(--clr-accent);
-            font-size: 1.05rem;
-            font-weight: 500;
-        }
-
-        .exp-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            background: var(--clr-green-dim);
-            border: 1px solid rgba(63, 185, 80, 0.3);
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--clr-green);
-        }
-
-        .exp-badge .live {
-            width: 6px;
-            height: 6px;
-            background: var(--clr-green);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .exp-duration {
-            font-family: var(--font-mono);
-            font-size: 0.8rem;
-            color: var(--clr-text-muted);
-            margin-bottom: 20px;
-        }
-
-        .exp-desc {
-            color: var(--clr-text-dim);
-            font-size: 0.92rem;
-            margin-bottom: 24px;
-            line-height: 1.8;
-        }
-
-        .exp-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .exp-list li {
-            display: flex;
-            gap: 12px;
-            color: var(--clr-text-dim);
-            font-size: 0.88rem;
-        }
-
-        .exp-list li .arrow {
-            color: var(--clr-accent);
-            flex-shrink: 0;
-            margin-top: 2px;
-            font-family: var(--font-mono);
-        }
-
-        /* ============================================
-           CONTACT SECTION
-        ============================================ */
-        .contact-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-        }
-
-        .contact-left h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .contact-left > p {
-            color: var(--clr-text-dim);
-            font-size: 0.92rem;
-            margin-bottom: 32px;
-            line-height: 1.8;
-        }
-
-        .contact-methods {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .contact-method {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 18px 20px;
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-md);
-            color: var(--clr-text);
-            transition: var(--transition);
-        }
-
-        .contact-method:hover {
-            border-color: var(--clr-accent);
-            background: var(--clr-card-hover);
-            transform: translateX(4px);
-            color: var(--clr-text);
-        }
-
-        .contact-method-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-
-        .contact-method-info {
-            flex: 1;
-        }
-
-        .contact-method-info strong {
-            display: block;
-            font-size: 0.88rem;
-        }
-
-        .contact-method-info span {
-            font-size: 0.78rem;
-            color: var(--clr-text-muted);
-        }
-
-        .contact-form-wrap {
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-        }
-
-        .contact-form-wrap h4 {
-            font-size: 1.1rem;
-            margin-bottom: 24px;
-        }
-
-        .field {
-            margin-bottom: 16px;
-        }
-
-        .field label {
-            display: block;
-            font-size: 0.78rem;
-            font-weight: 600;
-            color: var(--clr-text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        .field input,
-        .field textarea {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--clr-bg);
-            border: 1px solid var(--clr-border);
-            border-radius: var(--radius-sm);
-            color: var(--clr-text);
-            font-family: var(--font-main);
-            font-size: 0.9rem;
-            transition: var(--transition);
-            outline: none;
-        }
-
-        .field input:focus,
-        .field textarea:focus {
-            border-color: var(--clr-accent);
-            box-shadow: 0 0 0 3px var(--clr-accent-dim);
-        }
-
-        .field textarea {
-            resize: vertical;
-            min-height: 110px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: var(--radius-sm);
-            background: var(--gradient-main);
-            color: #fff;
-            font-family: var(--font-main);
-            font-size: 0.95rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .submit-btn:hover {
-            box-shadow: 0 4px 24px rgba(88, 166, 255, 0.4);
-            transform: translateY(-1px);
-        }
-
-        /* ============================================
-           FOOTER
-        ============================================ */
-        footer {
-            background: var(--clr-surface);
-            border-top: 1px solid var(--clr-border);
-            padding: 48px 24px;
-        }
-
-        .footer-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .footer-socials {
-            display: flex;
-            gap: 10px;
-        }
-
-        .footer-social {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            background: var(--clr-card);
-            border: 1px solid var(--clr-border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--clr-text-dim);
-            transition: var(--transition);
-        }
-
-        .footer-social:hover {
-            border-color: var(--clr-accent);
-            color: var(--clr-accent);
-            transform: translateY(-2px);
-        }
-
-        .footer-copy {
-            font-size: 0.82rem;
-            color: var(--clr-text-muted);
-        }
-
-        .footer-copy .accent {
-            color: var(--clr-accent);
-        }
-
-        /* ============================================
-           SCROLL REVEAL
-        ============================================ */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ============================================
-           RESPONSIVE
-        ============================================ */
-        @media (max-width: 1024px) {
-            .hero-inner {
-                grid-template-columns: 1fr;
-                gap: 50px;
-                text-align: center;
-            }
-
-            .hero-desc { margin-left: auto; margin-right: auto; }
-            .hero-ctas { justify-content: center; }
-            .hero-status { justify-content: center; }
-
-            .hero-visual { order: -1; }
-            .hero-card { max-width: 380px; margin: 0 auto; }
-
-            .about-layout { grid-template-columns: 1fr; }
-            .edu-grid { grid-template-columns: 1fr; }
-            .contact-layout { grid-template-columns: 1fr; }
-            .skills-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
         @media (max-width: 768px) {
-            .nav-menu {
-                position: fixed;
-                top: 72px;
-                left: 0;
-                right: 0;
-                background: rgba(6, 8, 13, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                padding: 16px;
-                gap: 4px;
-                border-bottom: 1px solid var(--clr-border);
-                transform: translateY(-120%);
-                transition: var(--transition);
-            }
-
-            .nav-menu.open { transform: translateY(0); }
-            .nav-toggle { display: flex; }
-
-            .skills-grid { grid-template-columns: 1fr; }
-            .about-info-grid { grid-template-columns: 1fr; }
-
-            .exp-card { padding: 28px; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-ctas { flex-direction: column; }
-            .btn { width: 100%; justify-content: center; }
-            .hero-status { flex-direction: column; gap: 10px; }
-            .footer-inner { flex-direction: column; text-align: center; }
+            .timeline-line::before { left: 20px; }
         }
     </style>
 </head>
-<body>
+<body class="text-gray-200 font-sans">
 
-<!-- Glow Cursor -->
-<div class="glow-cursor" id="glowCursor"></div>
-
-<!-- ===== NAVIGATION ===== -->
-<nav class="navbar" id="navbar">
-    <div class="nav-inner">
-        <a href="#hero" class="nav-brand">
-            <div class="nav-brand-icon">S</div>
-            Sidharth S
-        </a>
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="#about" class="active">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
-    </div>
-</nav>
-
-<!-- ===== HERO ===== -->
-<section class="hero" id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-inner">
-        <div class="hero-text">
-            <div class="hero-greeting">
-                <span class="line"></span> Hello, I'm
+    <!-- Navigation -->
+    <nav class="nav-blur fixed top-0 left-0 right-0 z-50 py-4">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+            <a href="#hero" class="text-xl font-bold gradient-text">Sidharth<span class="text-gray-400">.dev</span></a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors font-medium tracking-wide">About</a>
+                <a href="#skills" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors font-medium tracking-wide">Skills</a>
+                <a href="#certifications" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors font-medium tracking-wide">Credentials</a>
+                <a href="#experience" class="text-sm text-gray-400 hover:text-indigo-400 transition-colors font-medium tracking-wide">Experience</a>
+                <a href="#contact" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full text-sm font-medium transition-all hover:shadow-lg hover:shadow-indigo-500/30">Get In Touch</a>
             </div>
-            <h1>Sidharth <span class="highlight">S</span></h1>
-            <h2>Data Analytics Enthusiast &amp; Programmer</h2>
-            <p class="hero-desc">
-                A driven third-year BCA student with a passion for transforming data into actionable insights.
-                Currently gaining hands-on industry experience as an intern at <strong style="color:var(--clr-text);">IIT Palakkad</strong>,
-                while building expertise in analytics, programming, and modern technologies.
+            <!-- Mobile Menu Button -->
+            <button id="menuBtn" class="md:hidden text-gray-300 hover:text-indigo-400 transition-colors text-xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden px-6 pb-4 space-y-3">
+            <a href="#about" class="block text-sm text-gray-400 hover:text-indigo-400 transition-colors py-2">About</a>
+            <a href="#skills" class="block text-sm text-gray-400 hover:text-indigo-400 transition-colors py-2">Skills</a>
+            <a href="#certifications" class="block text-sm text-gray-400 hover:text-indigo-400 transition-colors py-2">Credentials</a>
+            <a href="#experience" class="block text-sm text-gray-400 hover:text-indigo-400 transition-colors py-2">Experience</a>
+            <a href="#contact" class="block text-sm text-indigo-400 font-medium py-2">Get In Touch</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Animated Background Particles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-600/10 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 right-1/3 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
+            <div class="animate-fade-in animate-delay-1">
+                <span class="inline-block px-4 py-1.5 bg-indigo-600/20 border border-indigo-500/30 rounded-full text-indigo-300 text-xs font-semibold tracking-wider uppercase mb-6">
+                    <i class="fa-solid fa-graduation-cap mr-2"></i>3rd-Year BCA Student
+                </span>
+            </div>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 animate-fade-in animate-delay-2 tracking-tight">
+                Hi, I'm <span class="gradient-text">Sidharth S</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-2 animate-fade-in animate-delay-3 leading-relaxed">
+                A passionate <span class="text-indigo-400 font-semibold">Data Analytics & Programming</span> enthusiast crafting insights from data and building smart solutions.
             </p>
-            <div class="hero-ctas">
-                <a href="#contact" class="btn btn-primary">✉️ Let's Connect</a>
-                <a href="#experience" class="btn btn-ghost">📄 View Work</a>
+            <p class="text-sm text-gray-500 mb-10 animate-fade-in animate-delay-3">
+                <i class="fa-solid fa-location-dot mr-1 text-indigo-400"></i> Intern at IIT Palakkad
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4 animate-fade-in animate-delay-4">
+                <a href="#about" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5">
+                    <i class="fa-solid fa-eye mr-2"></i>Explore My Work
+                </a>
+                <a href="https://linkedin.com/in/sidharth-s-profile" target="_blank" class="px-8 py-3.5 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-600/20 rounded-full font-semibold transition-all hover:border-indigo-400 hover:-translate-y-0.5">
+                    <i class="fa-brands fa-linkedin mr-2"></i>Connect on LinkedIn
+                </a>
             </div>
-            <div class="hero-status">
-                <div class="status-item">
-                    <span class="status-dot green"></span>
-                    Open to Opportunities
-                </div>
-                <div class="status-item">
-                    🎓 BCA 3rd Year
-                </div>
-                <div class="status-item">
-                    🏢 IIT Palakkad Intern
-                </div>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="hero-card">
-                <div class="card-avatar">👨‍💻</div>
-                <div class="card-name">Sidharth S</div>
-                <div class="card-role">BCA Student · Data Analytics Intern</div>
-                <div class="card-divider"></div>
-                <div class="card-details">
-                    <div class="card-detail-row">
-                        <div class="card-detail-icon blue">🎓</div>
-                        <div class="card-detail-text">
-                            <strong>BCA — 3rd Year</strong>
-                            Currently Pursuing
-                        </div>
-                    </div>
-                    <div class="card-detail-row">
-                        <div class="card-detail-icon green">🏢</div>
-                        <div class="card-detail-text">
-                            <strong>Intern @ IIT Palakkad</strong>
-                            Research & Analytics
-                        </div>
-                    </div>
-                    <div class="card-detail-row">
-                        <div class="card-detail-icon purple">🎯</div>
-                        <div class="card-detail-text">
-                            <strong>Seeking Roles in</strong>
-                            Data Analytics · Programming
-                        </div>
-                    </div>
-                </div>
-                <div class="card-tech-tags">
-                    <span class="tech-tag">python</span>
-                    <span class="tech-tag">sql</span>
-                    <span class="tech-tag">excel</span>
-                    <span class="tech-tag">c</span>
-                    <span class="tech-tag">networking</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- ===== ABOUT ===== -->
-<section class="section section-alt" id="about">
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="label">// About Me</div>
-            <h2>A Bit About Myself</h2>
-        </div>
-        <div class="about-layout">
-            <div class="about-content reveal">
-                <h3>👋 Who Am I?</h3>
-                <p>
-                    I'm <strong>Sidharth S</strong>, a third-year Bachelor of Computer Applications student with a deep
-                    interest in data analytics, programming, and emerging technologies. My academic foundation is
-                    strengthened by practical industry exposure through an ongoing internship at <strong>IIT Palakkad</strong>.
-                </p>
-                <p>
-                    Beyond the classroom, I've proactively pursued certified courses from <strong>IIT Bombay</strong>
-                    and <strong>Srishti Innovative</strong>, gaining real-world proficiency in data analytics tools,
-                    image editing, and eSIM technology — skills that bridge the gap between academic theory and industry demands.
-                </p>
-                <p>
-                    I'm actively seeking opportunities in <strong>data analytics</strong>, <strong>software development</strong>,
-                    and related fields where I can contribute my skills and continue to grow as a technology professional.
-                </p>
-                <div class="about-info-grid">
-                    <div class="info-card">
-                        <div class="info-card-icon" style="background:var(--clr-accent-dim);">🎓</div>
-                        <div class="info-card-text">
-                            <strong>BCA 3rd Year</strong>
-                            <span>Currently Pursuing</span>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon" style="background:var(--clr-green-dim);">🏢</div>
-                        <div class="info-card-text">
-                            <strong>IIT Palakkad</strong>
-                            <span>Intern</span>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon" style="background:var(--clr-purple-dim);">📍</div>
-                        <div class="info-card-text">
-                            <strong>India</strong>
-                            <span>Open to Remote / On-site</span>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-icon" style="background:var(--clr-orange-dim);">💡</div>
-                        <div class="info-card-text">
-                            <strong>Data + Code</strong>
-                            <span>Core Interests</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="about-terminal reveal">
-                <div class="terminal-bar">
-                    <span class="terminal-dot red"></span>
-                    <span class="terminal-dot yellow"></span>
-                    <span class="terminal-dot green"></span>
-                    <span class="terminal-title">sidharth@portfolio ~ %</span>
-                </div>
-                <div class="terminal-body">
-                    <div class="term-line">
-                        <span class="term-prompt">$ </span>
-                        <span class="term-cmd">cat</span>
-                        <span class="term-string"> about.json</span>
-                    </div>
-                    <div class="term-line"><span class="term-comment">// ---- sidharth.json ----</span></div>
-                    <div class="term-line">{</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"name"</span>: <span class="term-value">"Sidharth S"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"education"</span>: <span class="term-value">"BCA — 3rd Year"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"internship"</span>: <span class="term-value">"IIT Palakkad"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"skills"</span>: [</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"Python"</span>, <span class="term-value">"C"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"SQL"</span>, <span class="term-value">"Excel"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"Networking"</span></div>
-                    <div class="term-line">&nbsp;&nbsp;],</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"courses"</span>: [</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"eSIM — IIT Bombay"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"GIMP — IIT Bombay"</span>,</div>
-                    <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="term-value">"Data Analytics — Srishti"</span></div>
-                    <div class="term-line">&nbsp;&nbsp;],</div>
-                    <div class="term-line">&nbsp;&nbsp;<span class="term-key">"seeking"</span>: <span class="term-value">"Data Analytics & Programming Roles"</span></div>
-                    <div class="term-line">}</div>
-                    <div class="term-line"><span class="term-prompt">$ </span><span class="term-cmd">█</span></div>
-                </div>
+            <!-- Scroll Indicator -->
+            <div class="mt-16 animate-fade-in animate-delay-4">
+                <a href="#about" class="inline-block animate-float">
+                    <i class="fa-solid fa-chevron-down text-indigo-400 text-2xl"></i>
+                </a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== SKILLS ===== -->
-<section class="section" id="skills">
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="label">// Skills</div>
-            <h2>Technical Expertise</h2>
-            <p>A well-rounded skill set spanning programming, data analysis, and networking — built through academics, certifications, and real-world projects.</p>
-        </div>
-        <div class="skills-grid">
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon blue">🐍</div>
-                    <h4>Python</h4>
-                </div>
-                <p>Writing scripts, automating tasks, and performing data analysis with Python's powerful ecosystem.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Pandas</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">NumPy</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Scripting</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85%"></div></div>
-                    </div>
-                </div>
+    <!-- About Me & Education Section -->
+    <section id="about" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-heading text-3xl md:text-4xl font-bold text-white pb-3">About <span class="gradient-text">Me</span></h2>
             </div>
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon green">📊</div>
-                    <h4>Data Analytics</h4>
-                </div>
-                <p>Transforming raw data into meaningful insights using analytical tools and statistical methods.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Excel</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85%"></div></div>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left Column - About Text -->
+                <div class="space-y-6">
+                    <div class="glass-effect rounded-2xl p-8 card-hover">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-indigo-600/30 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-user text-indigo-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Who I Am</h3>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed">
+                            I'm <span class="text-white font-semibold">Sidharth S</span>, a curious and driven <span class="text-indigo-400">3rd-year BCA student</span> with a deep fascination for how data shapes the world around us. My academic journey has been anchored in computer applications, where I blend programming fundamentals with modern data analytics techniques to solve meaningful problems.
+                        </p>
                     </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Pivot</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Charts</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70%"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon purple">🗄️</div>
-                    <h4>SQL & Databases</h4>
-                </div>
-                <p>Querying, managing, and extracting insights from relational databases with precision.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Queries</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Joins</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Design</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70%"></div></div>
+                    <div class="glass-effect rounded-2xl p-8 card-hover">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-purple-600/30 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-bullseye text-purple-400"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Career Aspirations</h3>
+                        </div>
+                        <p class="text-gray-400 leading-relaxed">
+                            I'm actively seeking <span class="text-purple-400 font-semibold">job opportunities in data analytics, programming, and related technical domains</span>. My goal is to join a forward-thinking organization where I can apply my analytical skills to real-world challenges while continuing to grow as a technologist. I believe data-driven decision-making is the future, and I'm excited to be part of it.
+                        </p>
                     </div>
                 </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon orange">⚙️</div>
-                    <h4>C Programming</h4>
-                </div>
-                <p>Strong grasp of systems programming, data structures, and low-level computational logic.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Logic</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">DSA</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">OOP</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="72%"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon cyan">🌐</div>
-                    <h4>Networking</h4>
-                </div>
-                <p>Understanding of network protocols, infrastructure design, and configuration management.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">TCP/IP</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Config</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Trouble</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="68%"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div class="skill-card reveal">
-                <div class="skill-header">
-                    <div class="skill-icon rose">📈</div>
-                    <h4>Microsoft Excel</h4>
-                </div>
-                <p>Advanced spreadsheet modeling, pivot tables, complex formulas, and business reporting.</p>
-                <div class="skill-bar-group">
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Formulas</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Pivot</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80%"></div></div>
-                    </div>
-                    <div class="skill-bar-item">
-                        <span class="skill-bar-label">Macros</span>
-                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="60%"></div></div>
+                <!-- Right Column - Quick Facts -->
+                <div class="space-y-6">
+                    <div class="glass-effect rounded-2xl p-8 card-hover gradient-border">
+                        <h3 class="text-lg font-bold text-white mb-5 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-yellow-400"></i> Quick Facts
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 bg-white/[0.03] rounded-xl p-3.5">
+                                <div class="w-9 h-9 bg-indigo-600/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-school text-indigo-300 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Education</p>
+                                    <p class="text-sm text-gray-200 font-medium">Bachelor of Computer Applications (BCA)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/[0.03] rounded-xl p-3.5">
+                                <div class="w-9 h-9 bg-emerald-600/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-building-columns text-emerald-300 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Current Internship</p>
+                                    <p class="text-sm text-gray-200 font-medium">IIT Palakkad</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/[0.03] rounded-xl p-3.5">
+                                <div class="w-9 h-9 bg-purple-600/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-chart-line text-purple-300 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Focus Area</p>
+                                    <p class="text-sm text-gray-200 font-medium">Data Analytics & Programming</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white/[0.03] rounded-xl p-3.5">
+                                <div class="w-9 h-9 bg-rose-600/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-certificate text-rose-300 text-sm"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500">Certifications</p>
+                                    <p class="text-sm text-gray-200 font-medium">IIT Bombay & Srishti Innovative</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== EDUCATION & COURSES ===== -->
-<section class="section section-alt" id="education">
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="label">// Education & Certifications</div>
-            <h2>Learning Journey</h2>
-            <p>Complementing formal education with industry-recognized certifications from top institutions.</p>
-        </div>
-        <div class="edu-grid">
-            <div class="edu-column reveal">
-                <h3>🎓 Education <span class="count">1</span></h3>
-                <div class="edu-card">
-                    <div class="edu-date">2022 — Present</div>
-                    <h4>Bachelor of Computer Applications (BCA)</h4>
-                    <div class="org">3rd Year — Currently Pursuing</div>
-                    <p>
-                        Building a comprehensive foundation in programming, database management, networking,
-                        data analytics, and software development through a rigorous academic curriculum.
-                    </p>
-                </div>
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 px-6 bg-[#0c0c14]">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-heading text-3xl md:text-4xl font-bold text-white pb-3">Technical <span class="gradient-text">Skills</span></h2>
+                <p class="text-gray-500 mt-6 max-w-xl mx-auto">A showcase of technologies and tools I work with regularly</p>
             </div>
-            <div class="edu-column reveal">
-                <h3>📜 Certifications <span class="count">3</span></h3>
-                <div class="edu-card">
-                    <div class="edu-date">IIT Bombay</div>
-                    <h4>E-SIM Technology</h4>
-                    <div class="org">Online Add-on Course</div>
-                    <p>
-                        Explored embedded SIM architecture, deployment models, and applications in modern
-                        IoT and telecommunications ecosystems.
-                    </p>
-                </div>
-                <div class="edu-card">
-                    <div class="edu-date">IIT Bombay</div>
-                    <h4>GIMP — Image Editing & Design</h4>
-                    <div class="org">Online Add-on Course</div>
-                    <p>
-                        Mastered open-source graphic design and image manipulation using GIMP for
-                        professional-quality visual content creation.
-                    </p>
-                </div>
-                <div class="edu-card">
-                    <div class="edu-date">Srishti Innovative</div>
-                    <h4>Data Analytics</h4>
-                    <div class="org">Add-on Certification Course</div>
-                    <p>
-                        Comprehensive training in data collection, cleaning, exploratory analysis, visualization,
-                        and business intelligence reporting techniques.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- ===== EXPERIENCE ===== -->
-<section class="section" id="experience">
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="label">// Experience</div>
-            <h2>Professional Exposure</h2>
-            <p>Applying academic knowledge in a premier research institution environment.</p>
-        </div>
-        <div class="exp-showcase reveal">
-            <div class="exp-card">
-                <div class="exp-top">
+            <!-- Skills Categories -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Programming Languages -->
+                <div class="glass-effect rounded-2xl p-7 card-hover">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-indigo-600/30 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-code text-indigo-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Programming</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-badge px-4 py-2 bg-indigo-600/20 border border-indigo-500/30 rounded-full text-indigo-300 text-sm font-medium">
+                            <i class="fa-brands fa-python mr-1.5"></i>Python
+                        </span>
+                        <span class="skill-badge px-4 py-2 bg-indigo-600/20 border border-indigo-500/30 rounded-full text-indigo-300 text-sm font-medium">
+                            <i class="fa-solid fa-c mr-1.5"></i>C
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Data & Analytics -->
+                <div class="glass-effect rounded-2xl p-7 card-hover">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-emerald-600/30 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-chart-pie text-emerald-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Data & Analytics</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-badge px-4 py-2 bg-emerald-600/20 border border-emerald-500/30 rounded-full text-emerald-300 text-sm font-medium">
+                            <i class="fa-solid fa-database mr-1.5"></i>SQL
+                        </span>
+                        <span class="skill-badge px-4 py-2 bg-emerald-600/20 border border-emerald-500/30 rounded-full text-emerald-300 text-sm font-medium">
+                            <i class="fa-solid fa-table mr-1.5"></i>Microsoft Excel
+                        </span>
+                        <span class="skill-badge px-4 py-2 bg-emerald-600/20 border border-emerald-500/30 rounded-full text-emerald-300 text-sm font-medium">
+                            <i class="fa-solid fa-magnifying-glass-chart mr-1.5"></i>Data Analytics
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Infrastructure & Networking -->
+                <div class="glass-effect rounded-2xl p-7 card-hover">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 bg-purple-600/30 rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-network-wired text-purple-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Infrastructure</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="skill-badge px-4 py-2 bg-purple-600/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium">
+                            <i class="fa-solid fa-globe mr-1.5"></i>Networking
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Proficiency Bars -->
+            <div class="mt-12 glass-effect rounded-2xl p-8">
+                <h3 class="text-lg font-bold text-white mb-7 flex items-center gap-2">
+                    <i class="fa-solid fa-signal text-indigo-400"></i> Proficiency Overview
+                </h3>
+                <div class="grid md:grid-cols-2 gap-x-12 gap-y-5">
                     <div>
-                        <div class="exp-role">Intern — Data Analytics & Research</div>
-                        <div class="exp-org">Indian Institute of Technology (IIT), Palakkad</div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">Python</span>
+                            <span class="text-sm text-indigo-400 font-semibold">85%</span>
+                        </div>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 85%;"></div>
+                        </div>
                     </div>
-                    <div class="exp-badge">
-                        <span class="live"></span>
-                        Ongoing
+                    <div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">SQL</span>
+                            <span class="text-sm text-indigo-400 font-semibold">80%</span>
+                        </div>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 80%;"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="exp-duration">Currently Working · IIT Palakkad, India</div>
-                <p class="exp-desc">
-                    Contributing to data-driven research and development projects at one of India's
-                    premier technical institutions. Working alongside experienced researchers and
-                    faculty to solve real-world problems using analytical tools and programming skills.
-                </p>
-                <ul class="exp-list">
-                    <li>
-                        <span class="arrow">▹</span>
-                        Analyzing and processing complex datasets to extract actionable research insights
-                    </li>
-                    <li>
-                        <span class="arrow">▹</span>
-                        Collaborating with faculty and research scholars on ongoing project deliverables
-                    </li>
-                    <li>
-                        <span class="arrow">▹</span>
-                        Applying Python, SQL, and Excel skills to automate data workflows and reporting
-                    </li>
-                    <li>
-                        <span class="arrow">▹</span>
-                        Documenting findings and contributing to project reports and presentations
-                    </li>
-                    <li>
-                        <span class="arrow">▹</span>
-                        Gaining hands-on exposure to industry-standard tools and research methodologies
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ===== CONTACT ===== -->
-<section class="section section-alt" id="contact">
-    <div class="container">
-        <div class="section-head reveal">
-            <div class="label">// Contact</div>
-            <h2>Get In Touch</h2>
-            <p>Actively seeking opportunities in data analytics and programming. Let's connect!</p>
-        </div>
-        <div class="contact-layout">
-            <div class="contact-left reveal">
-                <h3>Let's Work Together 🤝</h3>
-                <p>
-                    Whether you have a job opening, a collaboration idea, or simply want to network —
-                    I'm always open to meaningful conversations. I'm especially interested in roles related
-                    to data analytics, programming, and technology.
-                </p>
-                <div class="contact-methods">
-                    <a href="tel:+919247538601" class="contact-method">
-                        <div class="contact-method-icon" style="background:var(--clr-green-dim);">📱</div>
-                        <div class="contact-method-info">
-                            <strong>+91 92475 38601</strong>
-                            <span>Phone · Available 9 AM – 8 PM IST</span>
+                    <div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">Microsoft Excel</span>
+                            <span class="text-sm text-indigo-400 font-semibold">75%</span>
                         </div>
-                    </a>
-                    <a href="mailto:sidharth.s@email.com" class="contact-method">
-                        <div class="contact-method-icon" style="background:var(--clr-accent-dim);">📧</div>
-                        <div class="contact-method-info">
-                            <strong>sidharth.s@email.com</strong>
-                            <span>Email · Response within 24 hours</span>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 75%;"></div>
                         </div>
-                    </a>
-                    <a href="https://linkedin.com/in/sidharth-s-kps" target="_blank" class="contact-method">
-                        <div class="contact-method-icon" style="background:var(--clr-purple-dim);">💼</div>
-                        <div class="contact-method-info">
-                            <strong>linkedin.com/in/sidharth-s-kps</strong>
-                            <span>LinkedIn · 1.2K+ Followers</span>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">Data Analytics</span>
+                            <span class="text-sm text-indigo-400 font-semibold">78%</span>
                         </div>
-                    </a>
-                    <div class="contact-method">
-                        <div class="contact-method-icon" style="background:var(--clr-orange-dim);">📍</div>
-                        <div class="contact-method-info">
-                            <strong>India</strong>
-                            <span>Open to Remote & On-site Opportunities</span>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 78%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">Networking</span>
+                            <span class="text-sm text-indigo-400 font-semibold">70%</span>
+                        </div>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1.5">
+                            <span class="text-sm text-gray-300 font-medium">C</span>
+                            <span class="text-sm text-indigo-400 font-semibold">72%</span>
+                        </div>
+                        <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full" style="width: 72%;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="contact-form-wrap reveal">
-                <h4>Send a Message ✉️</h4>
-                <form onsubmit="handleForm(event)">
-                    <div class="field">
-                        <label for="f-name">Your Name</label>
-                        <input type="text" id="f-name" placeholder="John Doe" required>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-heading text-3xl md:text-4xl font-bold text-white pb-3">Certifications & <span class="gradient-text">Courses</span></h2>
+                <p class="text-gray-500 mt-6 max-w-xl mx-auto">Professional development and academic credentials that shape my expertise</p>
+            </div>
+
+            <div class="timeline-line relative">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Card 1 - IIT Bombay -->
+                    <div class="glass-effect rounded-2xl p-8 card-hover relative md:col-start-1">
+                        <div class="timeline-dot absolute top-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-indigo-500 rounded-full border-4 border-[#0a0a0f] hidden md:block"></div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-indigo-600/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-building-columns text-indigo-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-indigo-400 font-semibold tracking-wider uppercase">IIT Bombay</span>
+                                <h3 class="text-lg font-bold text-white mt-1">Online Certification Programs</h3>
+                                <p class="text-gray-400 text-sm mt-2 leading-relaxed">
+                                    Completed specialized online courses covering <span class="text-indigo-300 font-medium">e-Sim</span>, <span class="text-indigo-300 font-medium">GIMP</span>, and other emerging technologies. These programs from one of India's premier institutions provided hands-on exposure to practical tools and simulation environments.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <span class="px-2.5 py-1 bg-indigo-600/15 border border-indigo-500/20 rounded-full text-indigo-400 text-xs">e-Sim</span>
+                                    <span class="px-2.5 py-1 bg-indigo-600/15 border border-indigo-500/20 rounded-full text-indigo-400 text-xs">GIMP</span>
+                                    <span class="px-2.5 py-1 bg-indigo-600/15 border border-indigo-500/20 rounded-full text-indigo-400 text-xs">Emerging Tech</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="f-email">Email</label>
-                        <input type="email" id="f-email" placeholder="john@company.com" required>
+
+                    <!-- Spacer for timeline alignment -->
+                    <div class="hidden md:block md:col-start-2"></div>
+
+                    <!-- Card 2 - Srishti Innovative -->
+                    <div class="glass-effect rounded-2xl p-8 card-hover relative md:col-start-2">
+                        <div class="timeline-dot absolute top-8 left-1/2 -translate-x-1/2 w-4 h-4 bg-emerald-500 rounded-full border-4 border-[#0a0a0f] hidden md:block"></div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-emerald-600/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-chart-simple text-emerald-400 text-lg"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs text-emerald-400 font-semibold tracking-wider uppercase">Srishti Innovative</span>
+                                <h3 class="text-lg font-bold text-white mt-1">Data Analytics Add-on Course</h3>
+                                <p class="text-gray-400 text-sm mt-2 leading-relaxed">
+                                    Completed an intensive <span class="text-emerald-300 font-medium">Data Analytics</span> add-on program that deepened my understanding of data processing, visualization techniques, and analytical methodologies. This course significantly strengthened my ability to derive actionable insights from raw data.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mt-3">
+                                    <span class="px-2.5 py-1 bg-emerald-600/15 border border-emerald-500/20 rounded-full text-emerald-400 text-xs">Data Processing</span>
+                                    <span class="px-2.5 py-1 bg-emerald-600/15 border border-emerald-500/20 rounded-full text-emerald-400 text-xs">Visualization</span>
+                                    <span class="px-2.5 py-1 bg-emerald-600/15 border border-emerald-500/20 rounded-full text-emerald-400 text-xs">Analytics</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="f-subject">Subject</label>
-                        <input type="text" id="f-subject" placeholder="Job Opportunity / Collaboration">
-                    </div>
-                    <div class="field">
-                        <label for="f-msg">Message</label>
-                        <textarea id="f-msg" rows="5" placeholder="Tell me about the opportunity..." required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn" id="submitBtn">Send Message ✉️</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ===== FOOTER ===== -->
-<footer>
-    <div class="footer-inner">
-        <div class="footer-socials">
-            <a href="https://linkedin.com/in/sidharth-s-kps" target="_blank" class="footer-social" title="LinkedIn">💼</a>
-            <a href="mailto:sidharth.s@email.com" class="footer-social" title="Email">📧</a>
-            <a href="tel:+919247538601" class="footer-social" title="Phone">📱</a>
-            <a href="#hero" class="footer-social" title="Top">⬆️</a>
+    <!-- Experience Section -->
+    <section id="experience" class="py-24 px-6 bg-[#0c0c14]">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-heading text-3xl md:text-4xl font-bold text-white pb-3">Work <span class="gradient-text">Experience</span></h2>
+                <p class="text-gray-500 mt-6 max-w-xl mx-auto">Building professional expertise through hands-on industry exposure</p>
+            </div>
+
+            <!-- Current Internship Highlight -->
+            <div class="glass-effect rounded-2xl overflow-hidden max-w-3xl mx-auto">
+                <!-- Top accent bar -->
+                <div class="h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500"></div>
+                <div class="p-8 md:p-10">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 bg-indigo-600/25 rounded-2xl flex items-center justify-center flex-shrink-0 animate-pulse border border-indigo-500/20" style="animation: pulse-glow 2s ease-in-out infinite;">
+                                <i class="fa-solid fa-briefcase text-indigo-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <span class="px-3 py-1 bg-emerald-600/20 border border-emerald-500/30 rounded-full text-emerald-400 text-xs font-semibold tracking-wide">Currently Active</span>
+                                <h3 class="text-2xl font-bold text-white mt-2">Internship at IIT Palakkad</h3>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium">
+                            <i class="fa-regular fa-calendar mr-1.5 text-indigo-400"></i> Ongoing
+                        </span>
+                    </div>
+                    <p class="text-gray-400 leading-relaxed">
+                        I am currently gaining invaluable industry exposure as an <span class="text-white font-semibold">intern at IIT Palakkad</span>, one of India's premier technical institutes. This opportunity has allowed me to work alongside experienced researchers and professionals, applying my technical knowledge to real-world scenarios. The experience is sharpening my problem-solving capabilities and providing deep insight into how data-driven technologies operate at an institutional level.
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Real-world projects
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Research exposure
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Mentorship from experts
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-gray-400">
+                            <i class="fa-solid fa-circle-check text-emerald-400"></i> Technical skill application
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Goals -->
+            <div class="mt-10 max-w-3xl mx-auto">
+                <div class="glass-effect rounded-2xl p-8 card-hover text-center border border-indigo-500/10">
+                    <div class="w-14 h-14 bg-purple-600/25 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-rocket text-purple-400 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Looking Ahead</h3>
+                    <p class="text-gray-400 leading-relaxed max-w-lg mx-auto">
+                        I am actively <span class="text-purple-400 font-semibold">seeking opportunities in data analytics, programming, and related technical fields</span>. With a strong foundation from my BCA program, hands-on internship experience, and specialized certifications, I'm ready to contribute meaningfully to data-driven teams and grow as a professional.
+                    </p>
+                </div>
+            </div>
         </div>
-        <p class="footer-copy">
-            © 2025 <span class="accent">Sidharth S</span>. Built with passion & purpose.
-        </p>
-    </div>
-</footer>
+    </section>
 
-<!-- ===== SCRIPTS ===== -->
-<script>
-    // === Glow Cursor ===
-    const cursor = document.getElementById('glowCursor');
-    document.addEventListener('mousemove', e => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-heading text-3xl md:text-4xl font-bold text-white pb-3">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="text-gray-500 mt-6 max-w-xl mx-auto">I'm always open to new opportunities, collaborations, and conversations</p>
+            </div>
 
-    // === Navbar Scroll ===
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
+            <div class="max-w-2xl mx-auto">
+                <div class="glass-effect rounded-2xl p-8 md:p-10 text-center">
+                    <div class="w-16 h-16 bg-indigo-600/25 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fa-solid fa-paper-plane text-indigo-400 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Let's Connect!</h3>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        Whether you have a job opportunity, a project idea, or just want to chat about tech — I'd love to hear from you. Feel free to reach out on LinkedIn.
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <a href="https://linkedin.com/in/sidharth-s-profile" target="_blank" class="inline-flex items-center gap-2.5 px-7 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-semibold transition-all hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5">
+                            <i class="fa-brands fa-linkedin text-xl"></i> Connect on LinkedIn
+                        </a>
+                        <a href="mailto:sidharth@example.com" class="inline-flex items-center gap-2.5 px-7 py-3.5 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-600/15 rounded-full font-semibold transition-all hover:border-indigo-400 hover:-translate-y-0.5">
+                            <i class="fa-solid fa-envelope"></i> Send Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // === Mobile Menu ===
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
+    <!-- Footer -->
+    <footer class="py-10 px-6 border-t border-white/5">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="text-lg font-bold gradient-text">Sidharth S</span>
+                <span class="text-gray-600">|</span>
+                <span class="text-sm text-gray-500">BCA Student & Data Enthusiast</span>
+            </div>
+            <p class="text-sm text-gray-600">
+                &copy; <span id="year"></span> Sidharth S. All rights reserved.
+            </p>
+            <a href="https://linkedin.com/in/sidharth-s-profile" target="_blank" class="text-gray-500 hover:text-indigo-400 transition-colors text-xl" title="LinkedIn Profile">
+                <i class="fa-brands fa-linkedin"></i>
+            </a>
+        </div>
+    </footer>
 
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
-    });
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
 
-    navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => navMenu.classList.remove('open'));
-    });
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-    // === Active Nav Link ===
-    const allSections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY + 120;
-        allSections.forEach(sec => {
-            const top = sec.offsetTop;
-            const h = sec.offsetHeight;
-            const id = sec.getAttribute('id');
-            const navLink = document.querySelector(`.nav-menu a[href="#${id}"]`);
-            if (navLink) {
-                if (scrollPos >= top && scrollPos < top + h) {
-                    navLink.classList.add('active');
-                } else {
-                    navLink.classList.remove('active');
+        // Close mobile menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
                 }
+            });
+        }, observerOptions);
+
+        // Observe all card elements for entrance animations
+        document.querySelectorAll('.card-hover, .glass-effect').forEach(el => {
+            if (!el.closest('#hero') && !el.closest('nav')) {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'all 0.7s ease-out';
+                observer.observe(el);
             }
         });
-    });
 
-    // === Scroll Reveal ===
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealCheck = () => {
-        revealEls.forEach(el => {
-            if (el.getBoundingClientRect().top < window.innerHeight - 60) {
-                el.classList.add('visible');
+        // Navbar scroll effect
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'shadow-indigo-900/10');
+            } else {
+                nav.classList.remove('shadow-lg', 'shadow-indigo-900/10');
             }
         });
-    };
-    window.addEventListener('scroll', revealCheck);
-    window.addEventListener('load', revealCheck);
-
-    // === Skill Bars Animation ===
-    const animateBars = () => {
-        document.querySelectorAll('.skill-bar-fill').forEach(bar => {
-            const rect = bar.getBoundingClientRect();
-            if (rect.top < window.innerHeight) {
-                bar.style.width = bar.dataset.width;
-            }
-        });
-    };
-    window.addEventListener('scroll', animateBars);
-    window.addEventListener('load', () => {
-        setTimeout(animateBars, 500);
-    });
-
-    // === Form Handler ===
-    function handleForm(e) {
-        e.preventDefault();
-        const name = document.getElementById('f-name').value;
-        const email = document.getElementById('f-email').value;
-        const subject = document.getElementById('f-subject').value || 'Contact from Portfolio';
-        const message = document.getElementById('f-msg').value;
-
-        const mailto = `mailto:sidharth.s@email.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-        window.location.href = mailto;
-
-        const btn = document.getElementById('submitBtn');
-        btn.textContent = '✓ Opening Email...';
-        btn.style.background = 'linear-gradient(135deg, #3fb950, #238636)';
-        setTimeout(() => {
-            btn.textContent = 'Send Message ✉️';
-            btn.style.background = '';
-            e.target.reset();
-        }, 3000);
-    }
-</script>
-
+    </script>
 </body>
 </html>
